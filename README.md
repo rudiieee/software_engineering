@@ -1,6 +1,6 @@
 Instructions for the Amazon Microservice
 
-The communication with the microservice will be performed using RabbitMQ, so the first thing will be to install it, you can follow the instructions on its webiste: https://www.rabbitmq.com/download.html
+The communication with the microservice will be performed using RabbitMQ, so the first thing will be to install it, you can follow the instructions on its webiste: [RabbitMQ Download](https://www.rabbitmq.com/download.html)
 
 After that you need to open a conection and send the word/phrase of the product you need to look for on Amazon. It's important to use the queue  and routign key "keyword" for this purpose.
 
@@ -32,4 +32,4 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
 
-For more information on how to use RabbitMQ on other languages, please visit https://www.rabbitmq.com/getstarted.html
+For more information on how to use RabbitMQ on other languages, please visit [RabbitMQ Get Started](https://www.rabbitmq.com/getstarted.html)
