@@ -6,15 +6,18 @@ After that you need to open a conection and send the word/phrase of the product 
 
 Here is an example sending the phrase "apple watch" on Python3:
 
+```
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='keyword')
 channel.basic_publish(exchange='',
                       routing_key='keyword',
                       body='apple watch')
+```
                       
 For the response you need to use the queue  and routign key "response". Here is an example of how we would receive a response on Python3:
 
+```
 channel = connection.channel()
 
 channel.queue_declare(queue='response')
@@ -27,3 +30,4 @@ channel.basic_consume(queue='response', on_message_callback=callback, auto_ack=T
 
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
+```
