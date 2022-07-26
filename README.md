@@ -1,5 +1,6 @@
 # Instructions for the Amazon Microservice
 
+## Send Request
 The communication with the microservice will be performed using RabbitMQ, so the first thing will be to install it, you can follow the instructions on its webiste: [RabbitMQ Download](https://www.rabbitmq.com/download.html)
 
 After that you need to open a conection and send the word/phrase of the product you need to look for on Amazon. It's important to use the queue  and routign key "keyword" for this purpose.
@@ -14,7 +15,8 @@ channel.basic_publish(exchange='',
                       routing_key='keyword',
                       body='apple watch')
 ```
-                      
+
+## Receive Response
 For the response you need to use the queue  and routign key "response". Here is an example of how we would receive a response on Python3:
 
 ```
