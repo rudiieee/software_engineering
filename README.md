@@ -33,5 +33,8 @@ channel.basic_consume(queue='response', on_message_callback=callback, auto_ack=T
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
-
+The response will have the format of a JSON string.
 For more information on how to use RabbitMQ on other languages, please visit [RabbitMQ Get Started](https://www.rabbitmq.com/getstarted.html)
+
+## UML Diagram
+
