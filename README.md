@@ -31,3 +31,5 @@ channel.basic_consume(queue='response', on_message_callback=callback, auto_ack=T
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()
 ```
+
+For more information on how to use RabbitMQ on other languages, please visit https://www.rabbitmq.com/getstarted.html
