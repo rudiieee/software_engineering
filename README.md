@@ -37,4 +37,4 @@ The response will have the format of a JSON string.
 For more information on how to use RabbitMQ on other languages, please visit [RabbitMQ Get Started](https://www.rabbitmq.com/getstarted.html)
 
 ## UML Diagram
-
+![UML Diagram](https://github.com/rudiieee/software_engineering/blob/main/UML%20Diagram.jpeg?raw=true)
