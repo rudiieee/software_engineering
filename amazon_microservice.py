@@ -45,8 +45,17 @@ def get_amazon_results(keyword):
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
     items = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "s-result-item s-asin")]')))
-    for item in items:
-        name = item.find_element(By.XPATH, './/span[@class="a-size-medium a-color-base a-text-normal"]')
+    for i in range(0, 2):
+        item = items[i]
+        name = None
+        try:
+            name = item.find_element(By.XPATH, './/span[@class="a-size-medium a-color-base a-text-normal"]')
+        except:
+            print("article is not of big horizontal type")
+        try:
+            name = item.find_element(By.XPATH, './/span[@class="a-size-base-plus a-color-base a-text-normal"]')
+        except:
+            print("article is not of small vertical type")
         product_name.append(name.text)
         data_asin = item.get_attribute("data-asin")
         product_asin.append(data_asin)
@@ -77,15 +86,14 @@ def get_amazon_results(keyword):
     driver.quit()
     dict = {}
     for i in range(0, len(product_name)):
-        print("i = ", i)
         dict[i] = {"product_name" : product_name[i], "product_asin" : product_asin[i], "product_price" : product_price[i], "product_rating" : product_ratings[i]}
-    print(product_name)
-    print(product_asin)
-    print(product_price)
-    print(product_ratings)
-    print(dict)
+    # print(product_name)
+    # print(product_asin)
+    # print(product_price)
+    # print(product_ratings)
+    # print(dict)
     jsonString = json.dumps(dict, indent=4)
-    print(jsonString)
+    # print(jsonString)
     return jsonString
 
 

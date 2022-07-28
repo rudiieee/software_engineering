@@ -1,9 +1,5 @@
 import tkinter as tk
-# from tkinter /constants import *
 import tkinter.messagebox as messagebox
-import tkinter.tix
-# from tkinter.messagebox import askyesno
-import time
 
 
 def copy_get_text():

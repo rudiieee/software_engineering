@@ -2,7 +2,7 @@ import pika, sys, os, json
 
 
 def main():
-    KEYWORD = "apple watch"
+    KEYWORD = "wireless charger"
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='keyword')
