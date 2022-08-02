@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import json
-import pika, sys, os
+import pika, sys, os, time
 
 def get_amazon_results(keyword):
     driver = webdriver.Chrome(service = Service(ChromeDriverManager().install()))
@@ -14,6 +14,7 @@ def get_amazon_results(keyword):
     # assign your website to scrape
     web = 'https://www.amazon.com'
     driver.get(web)
+    time.sleep(30)
 
     # import more
     from selenium.webdriver.common.by import By
@@ -45,7 +46,7 @@ def get_amazon_results(keyword):
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
     items = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "s-result-item s-asin")]')))
-    for i in range(0, 2):
+    for i in range(0, 10):
         item = items[i]
         name = None
         try:
