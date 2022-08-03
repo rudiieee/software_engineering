@@ -30,10 +30,25 @@ def get_amazon_results(keyword):
     # assign any keyword for searching
     # keyword = "wireless charger"
     # create WebElement for a search box
-    search_box = driver.find_element(By.ID, 'twotabsearchtextbox')
+    try:
+        search_box = driver.find_element(By.ID, 'twotabsearchtextbox')
+    except:
+        print("authenticated version of Amazon page")
+    try:
+        search_box = driver.find_element(By.ID, 'nav-bb-search')
+    except:
+        print("guest version of Amazon page")
     # type the keyword in searchbox
     search_box.send_keys(keyword)
     # create WebElement for a search button
+    try:
+        search_button = driver.find_element(By.ID, 'nav-search-submit-button')
+    except:
+        print("authenticated version of Amazon page")
+    try:
+        search_button = driver.find_element(By.ID, 'nav-bb-button')
+    except:
+        print("guest version of Amazon page")
     search_button = driver.find_element(By.ID, 'nav-search-submit-button')
     # click search_button
     search_button.click()
