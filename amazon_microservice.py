@@ -23,13 +23,15 @@ def get_amazon_results(keyword):
     web = 'https://www.amazon.com'
     driver.get(web)
     driver.get_screenshot_as_file("screenshotRODO.png")
-    driver.implicitly_wait(10)
+    # driver.implicitly_wait(5)
 
     # import more
     # from selenium.webdriver.common.by import By
     # assign any keyword for searching
     # keyword = "wireless charger"
     # create WebElement for a search box
+    search_button = None
+    search_box = None
     try:
         search_box = driver.find_element(By.ID, 'twotabsearchtextbox')
     except:
@@ -49,7 +51,6 @@ def get_amazon_results(keyword):
         search_button = driver.find_element(By.ID, 'nav-bb-button')
     except:
         print("guest version of Amazon page")
-    search_button = driver.find_element(By.ID, 'nav-search-submit-button')
     # click search_button
     search_button.click()
     # wait for the page to download
@@ -76,11 +77,11 @@ def get_amazon_results(keyword):
         try:
             name = item.find_element(By.XPATH, './/span[@class="a-size-medium a-color-base a-text-normal"]')
         except:
-            print("article is not of big horizontal type")
+            print("article is of small vertical type")
         try:
             name = item.find_element(By.XPATH, './/span[@class="a-size-base-plus a-color-base a-text-normal"]')
         except:
-            print("article is not of small vertical type")
+            print("article is of big horizontal type")
         product_name.append(name.text)
         data_asin = item.get_attribute("data-asin")
         product_asin.append(data_asin)
@@ -129,8 +130,8 @@ def main():
     channel.queue_declare(queue='keyword')
 
     def callback(ch, method, properties, body):
-        print(" [x] Received %r" % body)
-        keyword = str(body)
+        print(" [x] Received %r" % body.decode())
+        keyword = str(body.decode())
         response = get_amazon_results(keyword)
         connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
         channel = connection.channel()
