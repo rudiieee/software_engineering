@@ -2,22 +2,31 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import json
-import pika, sys, os, time
+import pika, sys, os
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+
+NUMBER_OF_ITEMS = 10
+
 
 def get_amazon_results(keyword):
     driver = webdriver.Chrome(service = Service(ChromeDriverManager().install()))
 
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    # create a driver object using driver_path as a parameter
-    driver = webdriver.Chrome(options = options, service = Service(ChromeDriverManager().install()))
+    # options.add_argument('--headless')
+    # options.add_argument('--disable-blink-features=AutomationControlled')
+    # # # create a driver object using driver_path as a parameter
+    # driver = webdriver.Chrome(options = options, service = Service(ChromeDriverManager().install()))
     # assign your website to scrape
     web = 'https://www.amazon.com'
     driver.get(web)
-    time.sleep(30)
+    driver.get_screenshot_as_file("screenshotRODO.png")
+    driver.implicitly_wait(10)
 
     # import more
-    from selenium.webdriver.common.by import By
+    # from selenium.webdriver.common.by import By
     # assign any keyword for searching
     # keyword = "wireless charger"
     # create WebElement for a search box
@@ -46,7 +55,7 @@ def get_amazon_results(keyword):
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
     items = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "s-result-item s-asin")]')))
-    for i in range(0, 10):
+    for i in range(0, NUMBER_OF_ITEMS):
         item = items[i]
         name = None
         try:
