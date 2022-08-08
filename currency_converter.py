@@ -145,6 +145,40 @@ def clear_encrypt_text():
     return True
 
 
+def help_random_text():
+    print("HELP RANDOM TEXT")
+    help_message = messagebox.showinfo("confirmation", 'On this section you can click on the'
+                                                       '"Generate Random Text" to automatically'
+                                                       'generate a text on the box below.\n\n'
+                                                       'You can also type some text there if you want.')
+    window.update()
+    return True
+
+
+def help_encrypt():
+    print("HELP RANDOM TEXT")
+    help_message = messagebox.showinfo("confirmation", 'On this section you can enter some text '
+                                                       'on box 1, or you can paste the text generated '
+                                                       'on the section below. \n\nOn number 2 you can '
+                                                       'add a password to encrypt your text. \n\nOn number '
+                                                       '3 you will get the encripted text. \n\nThis also works '
+                                                       'to decrypt, you paste the encrpted text on box 1 '
+                                                       'and you will get the original text on box 3.')
+    window.update()
+    return True
+
+
+def clear_all_text():
+    print("DELETE ALL TEXT")
+    answer = messagebox.askyesno(title='confirmation', message='Are you sure you want to start over and clear all text?')
+    if answer:
+        gen_text_box.delete(0, 'end')
+        encrypt_text_box.delete(0, 'end')
+        password_text_box.delete(0, 'end')
+        decrypt_text_box.delete(0, 'end')
+    return True
+
+
 # window sizes config
 window = tk.Tk()
 # root = tix.Tk()
@@ -177,13 +211,15 @@ window.rowconfigure(26,minsize=30)
 
 # Text Generator
 title1 = tk.Label(window, text = "Random Text Generator", font=("Arial", 25))
-title1.grid(row=0, column=0, sticky = 'nsew', padx=15, pady=(20, 10))
+title1.grid(row=0, column=1, sticky = 'nsew', padx=15, pady=(20, 10))
+help_random_text = tk.Button(window, text='?', command=help_random_text)
+help_random_text.grid(row=0, column=2, padx=15, pady=1)
 gen_text_1 = tk.Label(window, text = "1. Click the button on the right to generate text: ")
-gen_text_1.grid(row=1, column=0, sticky = 'w', padx=15, pady=1)
+gen_text_1.grid(row=1, column=0, sticky='w', padx=15, pady=1)
 gen_text_copy = tk.Button(window, text='Generate Random Text', command=generate_random_text)
 gen_text_copy.grid(row=1, column=2, padx=15, pady=1)
 gen_text_2 = tk.Label(window, text = "2. Generated Text: (You can type your own text if you want)")
-gen_text_2.grid(row=2, column=0, sticky = 'w', padx=15, pady=1)
+gen_text_2.grid(row=2, column=0, sticky='w', padx=15, pady=1)
 gen_text_box = tk.Entry(window, font=("arial", 24))
 gen_text_box.grid(row=3, column=0, rowspan=5, columnspan=3, sticky = 'nsew', padx=15, pady=1)
 
@@ -198,13 +234,15 @@ gen_text_clear_label.grid(row=9, column=1, padx=1, pady=1)
 
 # Encrypt / Decrypt
 title2 = tk.Label(window, text = "Encrypt / Decrypt with Password", font=("Arial", 25))
-title2.grid(row=10, column=0, sticky = 'nsew', padx=15, pady=1)
+title2.grid(row=10, column=1, sticky = 'nsew', padx=15, pady=1)
+help_encrypt_decrypt = tk.Button(window, text='?', command=help_encrypt)
+help_encrypt_decrypt.grid(row=10, column=2, padx=15, pady=1)
 encrypt_text_1 = tk.Label(window, text = "1. Enter text to Encrypt / Decrypt: ")
-encrypt_text_1.grid(row=11, column=0, sticky = 'w', padx=15, pady=1)
+encrypt_text_1.grid(row=11, column=0, sticky='w', padx=15, pady=1)
 encrypt_text_box = tk.Entry(window, font=("arial", 24))
 encrypt_text_box.grid(row=12, column=0, rowspan=5, columnspan=3, sticky = 'nsew', padx=15, pady=1)
 encrypt_text_2 = tk.Label(window, text = "2. Enter password for Encryption / Decryption: ")
-encrypt_text_2.grid(row=17, column=0, sticky = 'w', padx=15, pady=1)
+encrypt_text_2.grid(row=17, column=0, sticky='w', padx=15, pady=1)
 password_text_box = tk.Entry(window, font=("arial", 24))
 password_text_box.grid(row=18, column=0, columnspan=3, sticky = 'nsew', padx=15, pady=1)
 
@@ -218,7 +256,7 @@ decrypting_label = tk.Label(window, text='', bd=1,)
 decrypting_label.grid(row=20, column=1, padx=1, pady=1)
 
 encrypt_text_3 = tk.Label(window, text = "3. Output text from Encryption / Decryption: ")
-encrypt_text_3.grid(row=21, column=0, sticky = 'w', padx=15, pady=1)
+encrypt_text_3.grid(row=21, column=0, sticky='w', padx=15, pady=1)
 decrypt_text_box = tk.Entry(window, font=("arial", 24))
 decrypt_text_box.grid(row=22, column=0, rowspan=5, columnspan=3, sticky = 'nsew', padx=15, pady=1)
 
@@ -230,11 +268,11 @@ encrypt_text_copy_label = tk.Label(window, text='', bd=1,)
 encrypt_text_copy_label.grid(row=29, column=0, padx=15, pady=1)
 encrypt_text_clear_label = tk.Label(window, text='', bd=1,)
 encrypt_text_clear_label.grid(row=29, column=1, padx=1, pady=1)
-#
-# gen_text_clear = tk.Button(window, text='Clear All', command=clear_get_text)
-# gen_text_clear.grid(row=30, column=1, padx=1, pady=1)
-# gen_text_clear_label = tk.Label(window, text='', bd=1,)
-# gen_text_clear_label.grid(row=30, column=1, padx=1, pady=1)
+
+clear_all = tk.Button(window, text='Start Over', command=clear_all_text)
+clear_all.grid(row=30, column=1, sticky='w', padx=1, pady=1)
+clear_all_label = tk.Label(window, text='', bd=1,)
+clear_all_label.grid(row=31, column=1, sticky='w', padx=1, pady=1)
 
 
 def on_enter_gen_text_copy(e):
@@ -297,6 +335,16 @@ def on_leave_encrypt_text_clear(e):
     encrypt_text_clear_label.config(text='')
 
 
+def on_enter_clear_all(e):
+    clear_all.config(fg= "red", bg='Red')
+    clear_all_label.config(text='This will delete all text in all the boxes above')
+
+
+def on_leave_clear_all(e):
+    clear_all.config(fg= 'black')
+    clear_all_label.config(text='')
+
+
 gen_text_copy.bind('<Enter>', on_enter_gen_text_copy)
 gen_text_copy.bind('<Leave>', on_leave_gen_text_copy)
 gen_text_clear.bind('<Enter>', on_enter_gen_text_clear)
@@ -311,5 +359,8 @@ encrypt_text_copy.bind('<Enter>', on_enter_encrypt_text_copy)
 encrypt_text_copy.bind('<Leave>', on_leave_encrypt_text_copy)
 encrypt_text_clear.bind('<Enter>', on_enter_encrypt_text_clear)
 encrypt_text_clear.bind('<Leave>', on_leave_encrypt_text_clear)
+
+clear_all.bind('<Enter>', on_enter_clear_all)
+clear_all.bind('<Leave>', on_leave_clear_all)
 
 window.mainloop()
