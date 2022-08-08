@@ -21,7 +21,7 @@ def get_amazon_results(keyword):
     options.add_argument('--disable-blink-features=AutomationControlled')
     # create a driver object using driver_path as a parameter
     driver = webdriver.Chrome(options = options, service = Service(ChromeDriverManager().install()))
-    # assign your website to scrape
+    # website to scrape
     web = 'https://www.amazon.com'
     driver.get(web)
     driver.get_screenshot_as_file("screenshotRODO.png")
@@ -57,8 +57,6 @@ def get_amazon_results(keyword):
     product_price = []
     product_ratings = []
 
-    # from selenium.webdriver.support.ui import WebDriverWait
-    # from selenium.webdriver.support import expected_conditions as EC
     items = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "s-result-item s-asin")]')))
     for i in range(0, NUMBER_OF_ITEMS):
         item = items[i]
@@ -74,6 +72,7 @@ def get_amazon_results(keyword):
         product_name.append(name.text)
         data_asin = item.get_attribute("data-asin")
         product_asin.append(data_asin)
+
         # find price
         whole_price = item.find_elements(By.XPATH, './/span[@class="a-price-whole"]')
         fraction_price = item.find_elements(By.XPATH, './/span[@class="a-price-fraction"]')
@@ -84,20 +83,15 @@ def get_amazon_results(keyword):
             price = 0
         product_price.append(price)
 
-        # find ratings box
+        # find ratings
         ratings_box = item.find_elements(By.XPATH, './/div[@class="a-row a-size-small"]/span')
-
-        # find ratings and ratings_num
         if ratings_box != []:
             ratings = ratings_box[0].get_attribute('aria-label')
-            # ratings_num = ratings_box[1].get_attribute('aria-label')
         else:
             ratings = 0
 
         product_ratings.append(ratings)
-        # product_ratings_num.append(str(ratings_num))
 
-    # following print statement is for checking that we correctly scrape data we want
     driver.quit()
     dict = {}
     for i in range(0, len(product_name)):
