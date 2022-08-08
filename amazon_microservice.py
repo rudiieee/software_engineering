@@ -11,25 +11,21 @@ from selenium.webdriver.common.by import By
 NUMBER_OF_ITEMS = 10
 
 
+# The following code is based on tutorial:
+# https://medium.com/@jb.ranchana/web-scraping-with-selenium-in-python-amazon-search-result-part-1-f09c88090932
 def get_amazon_results(keyword):
     driver = webdriver.Chrome(service = Service(ChromeDriverManager().install()))
 
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
-    # options.add_argument('--disable-blink-features=AutomationControlled')
-    # # # create a driver object using driver_path as a parameter
-    # driver = webdriver.Chrome(options = options, service = Service(ChromeDriverManager().install()))
+    options.add_argument('--headless')
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    # create a driver object using driver_path as a parameter
+    driver = webdriver.Chrome(options = options, service = Service(ChromeDriverManager().install()))
     # assign your website to scrape
     web = 'https://www.amazon.com'
     driver.get(web)
     driver.get_screenshot_as_file("screenshotRODO.png")
-    # driver.implicitly_wait(5)
 
-    # import more
-    # from selenium.webdriver.common.by import By
-    # assign any keyword for searching
-    # keyword = "wireless charger"
-    # create WebElement for a search box
     search_button = None
     search_box = None
     try:
@@ -40,7 +36,7 @@ def get_amazon_results(keyword):
         search_box = driver.find_element(By.ID, 'nav-bb-search')
     except:
         print("guest version of Amazon page")
-    # type the keyword in searchbox
+    # type the keyword in search box
     search_box.send_keys(keyword)
     # create WebElement for a search button
     try:
@@ -55,21 +51,14 @@ def get_amazon_results(keyword):
     search_button.click()
     # wait for the page to download
     driver.implicitly_wait(5)
-    # quit the driver after finishing scraping (please keep this line at the bottom)
-    # driver.quit()
-
 
     product_name = []
     product_asin = []
     product_price = []
     product_ratings = []
-    product_ratings_num = []
-    product_link = []
 
-
-
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
+    # from selenium.webdriver.support.ui import WebDriverWait
+    # from selenium.webdriver.support import expected_conditions as EC
     items = WebDriverWait(driver,10).until(EC.presence_of_all_elements_located((By.XPATH, '//div[contains(@class, "s-result-item s-asin")]')))
     for i in range(0, NUMBER_OF_ITEMS):
         item = items[i]
@@ -113,13 +102,7 @@ def get_amazon_results(keyword):
     dict = {}
     for i in range(0, len(product_name)):
         dict[i] = {"product_name" : product_name[i], "product_asin" : product_asin[i], "product_price" : product_price[i], "product_rating" : product_ratings[i]}
-    # print(product_name)
-    # print(product_asin)
-    # print(product_price)
-    # print(product_ratings)
-    # print(dict)
     jsonString = json.dumps(dict, indent=4)
-    # print(jsonString)
     return jsonString
 
 
