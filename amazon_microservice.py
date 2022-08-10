@@ -19,15 +19,17 @@ def get_amazon_results(keyword):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-blink-features=AutomationControlled')
-    # create a driver object using driver_path as a parameter
     driver = webdriver.Chrome(options = options, service = Service(ChromeDriverManager().install()))
     # website to scrape
     web = 'https://www.amazon.com'
     driver.get(web)
-    driver.get_screenshot_as_file("screenshotRODO.png")
+    # get screenshot of the website, useful for debug purposes
+    driver.get_screenshot_as_file("amazon_screenshot.png")
 
     search_button = None
     search_box = None
+
+    # get the search toolbar, on either of two site versions, authenticated or guest
     try:
         search_box = driver.find_element(By.ID, 'twotabsearchtextbox')
     except:
@@ -38,7 +40,7 @@ def get_amazon_results(keyword):
         print("guest version of Amazon page")
     # type the keyword in search box
     search_box.send_keys(keyword)
-    # create WebElement for a search button
+    # create WebElement for a search button, in either authenticated or guest versions of the site
     try:
         search_button = driver.find_element(By.ID, 'nav-search-submit-button')
     except:
